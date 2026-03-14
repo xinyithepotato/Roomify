@@ -2,6 +2,8 @@ import type { Route } from "./+types/home";
 import Navbar from "../../components/Navbar";
 import {ArrowRight, ArrowRightIcon, ArrowUpRight, Clock, Layers} from "lucide-react";
 import Button from "../../components/ui/Button";
+import Upload from "../../components/Upload"
+import {useNavigate} from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,7 +13,15 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return (
+        const navigate = useNavigate();
+        const handleUploadComplete = async (base64Image: string) => {
+            const newId = Date.now().toString();
+
+            navigate(`/visualizer/${newId}`);
+
+            return true;
+        }
+    return (
       <div className="home">
           <Navbar />
 
@@ -45,17 +55,17 @@ export default function Home() {
 
               <div id={"upload"} className={"upload-shell"}>
                   <div className={"grid-overlay"}/>
-                    <div className={"upload-card"}>
-                        <div className={"upload-head"}>
-                            <div className={"upload-icon"}>
-                                <Layers className={"icon"}/>
+                        <div className={"upload-card"}>
+                            <div className={"upload-head"}>
+                                <div className={"upload-icon"}>
+                                    <Layers className={"icon"}/>
+                                </div>
+                                <h3>Upload your floor plan</h3>
+                                <p>Supports JPG, PNG, formats up to 10MB</p>
                             </div>
-                            <h3>Upload your floor plan</h3>
-                            <p>Supports JPG, PNG, formats up to 10MB</p>
-                        </div>
 
-                        <p>Upload images</p>
-                    </div>
+                            <Upload onComplete={handleUploadComplete}/>
+                        </div>
               </div>
           </section>
 
