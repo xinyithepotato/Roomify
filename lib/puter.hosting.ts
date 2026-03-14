@@ -55,7 +55,7 @@ export const uploadImageToHosting = async ({hosting, url, projectId, label}: Sto
         const hostedUrl = getHostedUrl({subdomain: hosting.subdomain}, filePath);
 
         return hostedUrl ? {url: hostedUrl} : null;
-    }catch (e) {
+    } catch (e) {
         console.warn('Failed to store hosted image', e);
         return null;
     }
